@@ -1,0 +1,47 @@
+.jobPage {
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.green {
+    color:green;
+}
+
+.addButton {
+    text-align: right;
+}
+
+p {
+    margin-bottom: 0.1em;
+}
+
+.pending {
+    background-color: red;
+}
+
+.inprogress {
+    background-color: yellow;
+}
+
+.done {
+    background-color: lightgreen;
+}
+
+.ui.celled.table {
+    border: 2px solid gray;
+}
+
+.ui.celled.table tr th:first-child {
+    width: 1%;
+}
+ 
+.ui.celled.table thead th {
+    border-bottom: 2px solid gray;
+}
+
+.ui.celled.table th, td {
+    border: 1px solid gray;
+} 
