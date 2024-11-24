@@ -7,46 +7,12 @@ export default function JobRead() {
     const [JobData, setJobData] = useState([]);
     
     useEffect(() => {
-        setJobData([
-            {
-                "id": "1",
-                "title": "Job 1",
-                "description": "Alspec",
-                "subItems": [
-                    {
-                        "itemId": "1",
-                        "title": "Sub-item 1",
-                        "description": "Sub-item description",
-                        "status": "Pending"
-                    },
-                    {
-                        "itemId": "2",
-                        "title": "Sub-item 2",
-                        "description": "Another sub-item",
-                        "status": "In Progress"
-                    }
-                ]
-            },
-            {
-                "id": "2",
-                "title": "Job 2",
-                "description": "Alspec 2",
-                "subItems": [
-                    {
-                        "itemId": "1",
-                        "title": "Sub-item 1",
-                        "description": "Sub-item description",
-                        "status": "Done"
-                    },
-                    {
-                        "itemId": "2",
-                        "title": "Sub-item 2",
-                        "description": "Another sub-item",
-                        "status": "In Progress"
-                    }
-                ]
-            }
-        ]);
+        axios.get(`${process.env.REACT_APP_ALSPEC_API_URL}/Job`)
+            .then((response) => {
+                setJobData(response.data.$values);
+            }, (error) => {
+                console.log(error);
+            })
     }, []);
 
     return (
@@ -65,22 +31,22 @@ export default function JobRead() {
                     {JobData.map((job, index) => {
                         return (
                             <>
-                            <Table.Row key={job.id}>
-                                <Table.Cell>{job.id}</Table.Cell>
-                                <Table.Cell>{job.title}</Table.Cell>
-                                <Table.Cell>{job.description}</Table.Cell>
+                            <Table.Row key={job.Id}>
+                                <Table.Cell>{job.Id}</Table.Cell>
+                                <Table.Cell>{job.Title}</Table.Cell>
+                                <Table.Cell>{job.Description}</Table.Cell>
                             </Table.Row>
-                            {job.subItems.map((subItem, subIndex) => { 
+                            {job.SubItems.$values.map((subItem, subIndex) => { 
                                 return(
-                                    <Table.Row key={subItem.itemId}>
-                                        {subIndex === 0 ? <Table.Cell rowSpan={job.subItems.length}></Table.Cell> : null}
+                                    <Table.Row key={subItem.ItemId}>
+                                        {subIndex === 0 ? <Table.Cell rowSpan={job.SubItems.$values.length}></Table.Cell> : null}
                                         <Table.Cell colSpan={2} className={
-                                            subItem.status === "Pending" ? "pending" :
-                                            subItem.status === "In Progress" ? "inprogress" : "done"}>
-                                            <p>Item ID: {subItem.itemId}</p>
-                                            <p>Title: {subItem.title}</p>
-                                            <p>Description: {subItem.description}</p>
-                                            <p>Status: {subItem.status}</p>
+                                            subItem.Status === "Pending" ? "pending" :
+                                            subItem.Status === "In Progress" ? "inprogress" : "completed"}>
+                                            <p>Item ID: {subItem.ItemId}</p>
+                                            <p>Title: {subItem.Title}</p>
+                                            <p>Description: {subItem.Description}</p>
+                                            <p>Status: {subItem.Status}</p>
                                         </Table.Cell>
                                     </Table.Row>
                                 );
